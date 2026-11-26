@@ -14,7 +14,7 @@ public class Incidente implements Comparable<Incidente> {
     private final LocalDateTime registradoEn;
 
     public Incidente(String codigo, int severidad, int minutosRestantes,
-            List<ServicioAfectado> servicios, LocalDateTime registradoEn) {
+        List<ServicioAfectado> servicios, LocalDateTime registradoEn) {
         // Objects.requireNonNull(codigo, "codigo");
         // if (!codigo.matches("[A-Za-z0-9-]+") || severidad < 1 || severidad > 4) {
         // throw new IllegalArgumentException("Código o severidad inválidos");
@@ -54,9 +54,10 @@ public class Incidente implements Comparable<Incidente> {
                     Comparator.comparingInt(Incidente:: getSeveridad)
                     .thenComparingInt(Incidente:: getMinutosRestantes)
                     //cantidad de servicios: servicios.size
-                    .thenComparing(Comparator.comparingInt((Incidente i) -> i.getServicios().size()).reversed())
-                    .thenComparing(Comparator.comparingInt((Incidente i) -> {
-                        int sumatoriaUsuario = 0;
+                    .thenComparing(Comparator.comparingInt((Incidente i) ->
+                    i.getServicios().size()).reversed())
+                    .thenComparing(Comparator.comparingLong((Incidente i) -> {
+                        long sumatoriaUsuario = 0L;
                         for(ServicioAfectado servicioAfectado : i.getServicios()) {
                             sumatoriaUsuario += servicioAfectado.usuariosAfectados();
                         }
